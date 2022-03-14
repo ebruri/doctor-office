@@ -41,7 +41,7 @@ namespace DoctorOffice.Controllers
     {
       var thisPatient = _db.Patients
           .Include(patient => patient.JoinEntities)
-          .ThenInclude(join => join.Doctor)
+          .ThenInclude(join => join.doctor)
           .FirstOrDefault(patient => patient.PatientId == id);
       return View(thisPatient);
     }

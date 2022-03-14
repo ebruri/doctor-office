@@ -18,7 +18,7 @@ else
   <ul>
   @foreach (var join in Model.JoinEntities)
     {
-      <li>@join.Doctor.Name</li>
+     <li>@join.doctor.Name</li> 
       @using (Html.BeginForm("DeleteDoctor", "Patients"))
       {
         @Html.Hidden("joinId", @join.DoctorPatientId)
@@ -28,8 +28,8 @@ else
   </ul>
 }
 
-<p>@Html.ActionLink("Add a Category", "AddCategory", new { id = Model.ItemId })</p>
+<p>@Html.ActionLink("Add a Doctor", "AddDoctor", new { id = Model.PatientId})</p>
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Item", "Edit", new { id = Model.ItemId })</p>
-<p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.ItemId })</p>
+<p>@Html.ActionLink("Edit Patient", "Edit", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("Delete Patient", "Delete", new { id = Model.PatientId })</p>
