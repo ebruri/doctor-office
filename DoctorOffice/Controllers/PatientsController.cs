@@ -63,7 +63,7 @@ namespace DoctorOffice.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    public ActionResult AddCategory(int id)
+    public ActionResult AddDoctor(int id)
       {
         var thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == id);
         ViewBag.CategoryId = new SelectList(_db.Doctors, "DoctorId", "Name");
@@ -71,7 +71,7 @@ namespace DoctorOffice.Controllers
       }
 
     [HttpPost]
-    public ActionResult AddCategory(Patient patient, int DoctorId)
+    public ActionResult AddDoctor(Patient patient, int DoctorId)
     {
       if (DoctorId != 0)
       {
@@ -96,7 +96,7 @@ namespace DoctorOffice.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteCategory(int joinId)
+    public ActionResult DeleteDoctor(int joinId)
     {
       var joinEntry = _db.DoctorPatient.FirstOrDefault(entry => entry.DoctorPatientId == joinId);
       _db.DoctorPatient.Remove(joinEntry);

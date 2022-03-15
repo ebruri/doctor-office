@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using DoctorOffice.Models;
@@ -21,14 +22,20 @@ namespace DoctorOffice.Controllers
     }
     public ActionResult Create()
     {
+      ViewBag.SpecialityId = new SelectList(_db.Specialities, "SpecialityId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Doctor doctor)
+    public ActionResult Create(Doctor doctor, int SpecialityId)
     {
       _db.Doctors.Add(doctor);
       _db.SaveChanges();
+      if (SpecialityId != 0)
+      {
+        _db.SpecialityDoctor.Add(new SpecialityDoctor() { SpecialityId = SpecialityId, DoctorId = doctor.DoctorId });
+        _db.SaveChanges();
+      }
       return RedirectToAction("Index");
     }
     public ActionResult Details(int id)
