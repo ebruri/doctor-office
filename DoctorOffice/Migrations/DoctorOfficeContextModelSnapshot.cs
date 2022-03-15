@@ -25,9 +25,6 @@ namespace DoctorOffice.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Speciality")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.HasKey("DoctorId");
 
                     b.ToTable("Doctors");
@@ -77,6 +74,41 @@ namespace DoctorOffice.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("DoctorOffice.Models.Speciality", b =>
+                {
+                    b.Property<int>("SpecialityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("SpecialityId");
+
+                    b.ToTable("Specialities");
+                });
+
+            modelBuilder.Entity("DoctorOffice.Models.SpecialityDoctor", b =>
+                {
+                    b.Property<int>("SpecialityDoctorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SpecialityDoctorId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("SpecialityId");
+
+                    b.ToTable("SpecialityDoctor");
+                });
+
             modelBuilder.Entity("DoctorOffice.Models.DoctorPatient", b =>
                 {
                     b.HasOne("DoctorOffice.Models.Doctor", "doctor")
@@ -96,12 +128,36 @@ namespace DoctorOffice.Migrations
                     b.Navigation("patient");
                 });
 
+            modelBuilder.Entity("DoctorOffice.Models.SpecialityDoctor", b =>
+                {
+                    b.HasOne("DoctorOffice.Models.Doctor", "doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DoctorOffice.Models.Speciality", "speciality")
+                        .WithMany("JoinEntities")
+                        .HasForeignKey("SpecialityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("doctor");
+
+                    b.Navigation("speciality");
+                });
+
             modelBuilder.Entity("DoctorOffice.Models.Doctor", b =>
                 {
                     b.Navigation("JoinEntities");
                 });
 
             modelBuilder.Entity("DoctorOffice.Models.Patient", b =>
+                {
+                    b.Navigation("JoinEntities");
+                });
+
+            modelBuilder.Entity("DoctorOffice.Models.Speciality", b =>
                 {
                     b.Navigation("JoinEntities");
                 });

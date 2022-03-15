@@ -13,8 +13,7 @@ namespace DoctorOffice.Migrations
                 {
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    Speciality = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
+                    Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,6 +34,19 @@ namespace DoctorOffice.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patients", x => x.PatientId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialities",
+                columns: table => new
+                {
+                    SpecialityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialities", x => x.SpecialityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,6 +75,32 @@ namespace DoctorOffice.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SpecialityDoctor",
+                columns: table => new
+                {
+                    SpecialityDoctorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SpecialityId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpecialityDoctor", x => x.SpecialityDoctorId);
+                    table.ForeignKey(
+                        name: "FK_SpecialityDoctor_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SpecialityDoctor_Specialities_SpecialityId",
+                        column: x => x.SpecialityId,
+                        principalTable: "Specialities",
+                        principalColumn: "SpecialityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorPatient_DoctorId",
                 table: "DoctorPatient",
@@ -72,6 +110,16 @@ namespace DoctorOffice.Migrations
                 name: "IX_DoctorPatient_PatientId",
                 table: "DoctorPatient",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecialityDoctor_DoctorId",
+                table: "SpecialityDoctor",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecialityDoctor_SpecialityId",
+                table: "SpecialityDoctor",
+                column: "SpecialityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -80,10 +128,16 @@ namespace DoctorOffice.Migrations
                 name: "DoctorPatient");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "SpecialityDoctor");
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Specialities");
         }
     }
 }
