@@ -2,16 +2,15 @@
   Layout = "_Layout";
 }
 <div class="home">
-  <h1 class="my-5 mx-5">Doctor-Patient Management System</h1>
 
-  <div class="card border-dark text-center" style="max-width: 30rem;">
-    <div class="card-header">Please click a button to see</div>
+  <div class="card border-secondary mb-3 mt-5" style="max-width: 60rem;">
+    <div class="card-header"><h1>Doctor-Patient Management System</h1></div>
     <div class="card-body">
       <h4 class="card-title"></h4>
       <p class="card-text">
-        @Html.ActionLink("See all patients", "Index", "Patients", new { area = "" }, new { @class = "btn btn-secondary"  })
-        @Html.ActionLink("See all doctors", "Index", "Doctors", new { area = "" }, new { @class = "btn btn-secondary" })
-        @Html.ActionLink("See all specialities", "Index", "Specialities", new { area = "" }, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("See all patients", "Index", "Patients", new { area = "" }, new { @class = "btn btn-secondary btn-lg my-5 mx-4"  })
+        @Html.ActionLink("See all doctors", "Index", "Doctors", new { area = "" }, new { @class = "btn btn-secondary btn-lg my-5 mx-4" })
+        @Html.ActionLink("See all specialities", "Index", "Specialities", new { area = "" }, new { @class = "btn btn-secondary btn-lg my-5 mx-4" })
       </p>
     </div>
   </div>  

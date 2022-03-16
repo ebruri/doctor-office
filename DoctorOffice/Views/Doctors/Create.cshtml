@@ -2,19 +2,23 @@
   Layout = "_Layout";
 }
 
-@using DoctorOffice.Models;
 @model DoctorOffice.Models.Doctor
 
+<div class="home">
+  <div class="card border-secondary mb-3 mt-5" style="max-width: 50rem;">
+    <div class="card-header"><h1>Add a new doctor</h1></div>
+    <div class="card-body">
+      @using (Html.BeginForm())
+      {
+        @Html.LabelFor(model => model.Name, new { @class = "my-2 mx-2" })
+        @Html.TextBoxFor(model => model.Name, new { @class = "my-2 mx-2" })
+        
+        @Html.Label("Select speciality", null, new { @class = "my-2 mx-2" })
+        @Html.DropDownList("SpecialityId", null, new { @class = "my-2 mx-2" })
 
-<h4>Add a new doctor</h4>
-@using (Html.BeginForm())
-{
-  @Html.LabelFor(model => model.Name)
-  @Html.TextBoxFor(model => model.Name)
-  
-  @Html.Label("Select speciality")
-  @Html.DropDownList("SpecialityId")
-
-  <input type="submit" value="Add new doctor" />
-}
-<p>@Html.ActionLink("Show all doctors", "Index")</p>
+        <button type="submit" class="btn btn-secondary btn-sm my-2 mx-2">Add New Doctor</button>
+      }
+      <p>@Html.ActionLink("Show all doctors", "Index", new {area = ""}, new { @class = "btn btn-secondary btn-sm my-2 mx-2" })</p>
+    </div>
+  </div>   
+</div>  

@@ -17,7 +17,7 @@ namespace DoctorOffice.Controllers
     }
     public ActionResult Index()
     {
-      List<Doctor> model = _db.Doctors.ToList();
+      List<SpecialityDoctor> model = _db.SpecialityDoctor.ToList();
       return View(model);
     }
     public ActionResult Create()
