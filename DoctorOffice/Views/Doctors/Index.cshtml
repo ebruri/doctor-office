@@ -6,10 +6,10 @@
 
 <h1 class="my-4">Our Doctors</h1>
 
-@if (@Model.Count == 0)
+@* @if (@Model.Count == 0)
 {
   <h3>No doctors have been added yet!</h3>
-}
+} *@
 <table class="table table-hover">
   <thead>
     <tr>
@@ -20,18 +20,34 @@
   </thead>
   <tbody>
     <tr class="table-active">
-      @foreach (SpecialityDoctor specialitydoctor in Model)
+      @foreach (Doctor doctor in @Model)
       {
         <tr>
-          <th>@Html.ActionLink($"{specialitydoctor.doctor.Name}", "Details", new { id = specialitydoctor.doctor.DoctorId }, new { @class = "text-black"})</th>
-          <th>@specialitydoctor.speciality.Name</th>
-          <th>@specialitydoctor.doctor.JoinEntities.Count()</th>
-        </tr>
-      }
-    </tr>    
-  </tbody>  
+        <th>@Html.ActionLink($"{doctor.Name}", "Details", new { id = doctor.DoctorId }, new { @class = "text-black"})</th>
+        <th>
+          @foreach(var speciality in @doctor.JoinEntities2)
+          {
+            @speciality.speciality.Name
+            <br>
+          }
+        </th>
+        <th>@doctor.JoinEntities.Count()</th>
+        </tr> 
+      }     
+    </tr>
+  </tbody>
 </table>
 </ul>
 
 @Html.ActionLink("Add new Doctor", "Create", new {area = ""}, new { @class = "btn btn-secondary btn-sm my-3 mr-4" })
-@Html.ActionLink("Home", "Index", "Home", new {area = ""}, new { @class = "btn btn-secondary btn-sm my-3 mx-4"  })
+@Html.ActionLink("Home", "Index", "Home", new {area = ""}, new { @class = "btn btn-secondary btn-sm my-3 mx-4" })
+
+
+<!-- newspecialities=_db.Specialities 
+for each (Speciality s in newspecialities)
+{
+  for each (Doctor d in s.Doctor)
+  {
+    something.Add(s.Name+c.Name)
+  }
+} -->

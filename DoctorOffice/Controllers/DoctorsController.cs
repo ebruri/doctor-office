@@ -16,9 +16,12 @@ namespace DoctorOffice.Controllers
       _db = db;
     }
     public ActionResult Index()
-    {
-      List<SpecialityDoctor> model = _db.SpecialityDoctor.ToList();
-      return View(model);
+    {  
+      List<Doctor> thisDoctor = _db.Doctors
+        .Include(doctor => doctor.JoinEntities2)
+        .ThenInclude(join => join.speciality)
+        .ToList();
+      return View(thisDoctor);
     }
     public ActionResult Create()
     {
@@ -70,6 +73,32 @@ namespace DoctorOffice.Controllers
     {
       var thisDoctor = _db.Doctors.FirstOrDefault(doctor => doctor.DoctorId == id);
       _db.Doctors.Remove(thisDoctor);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+    public ActionResult AddSpeciality(int id)
+      {
+        ViewBag.SpecialityId = new SelectList(_db.Specialities, "SpecialityId", "Name");
+        var thisDoctor = _db.Doctors.FirstOrDefault(doctor => doctor.DoctorId == id);
+        return View(thisDoctor);
+      }
+
+    [HttpPost]
+    public ActionResult AddSpeciality(Doctor doctor, int SpecialityId)
+    {
+      if (SpecialityId != 0)
+      {
+        _db.SpecialityDoctor.Add(new SpecialityDoctor() { SpecialityId = SpecialityId, DoctorId = doctor.DoctorId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Index");
+    }
+    
+    [HttpPost]
+    public ActionResult DeleteSpeciality(int joinId)
+    {
+      var joinEntry = _db.SpecialityDoctor.FirstOrDefault(entry => entry.SpecialityDoctorId == joinId);
+      _db.SpecialityDoctor.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

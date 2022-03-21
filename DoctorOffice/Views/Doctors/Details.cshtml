@@ -12,7 +12,14 @@
 @foreach (var join in Model.JoinEntities2)
   {
     @join.speciality.Name
+    @using (Html.BeginForm("DeleteSpeciality", "Doctors"))
+      {
+        @Html.Hidden("joinId", @join.SpecialityDoctorId)
+        <input type="submit" value="Delete" />
+      }
   }
+      
+
 <hr />
 <h5>Patients associated with this doctor:</h5>
 @if (@Model.JoinEntities.Count == 0)
@@ -29,6 +36,6 @@ else
   </ul>
 }
 
-@Html.ActionLink("Back to Doctors", "Index", new {area = ""}, new { @class = "btn btn-secondary btn-sm ml-2 mt-3" })
+@Html.ActionLink("Add a speciality", "AddSpeciality", new { id = Model.DoctorId }, new { @class = "btn btn-secondary btn-sm ml-2 mt-3" })
 @Html.ActionLink("Edit Doctor", "Edit", new { id = Model.DoctorId }, new { @class = "btn btn-secondary btn-sm mx-2 mt-3" })
 @Html.ActionLink("Delete Doctor", "Delete", new { id = Model.DoctorId }, new { @class = "btn btn-secondary btn-sm mx-2 mt-3" })

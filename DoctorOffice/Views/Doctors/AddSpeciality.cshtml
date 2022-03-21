@@ -2,20 +2,20 @@
   Layout = "_Layout";
 }
 
-@model DoctorOffice.Models.Patient
+@model DoctorOffice.Models.Doctor
 
-<h2>Add a doctor</h2>
+<h2>Add a speciality</h2>
 
-<h4>Add a doctor to this patient: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Add a speciality to this doctor: @Html.DisplayFor(model => model.Name)</h4>
 
 @using (Html.BeginForm())
 {
-  @Html.HiddenFor(model => model.PatientId)
+  @Html.HiddenFor(model => model.DoctorId)
 
-  @Html.Label("Select doctor")
-  @Html.DropDownList("DoctorId")
+  @Html.Label("Select speciality")
+  @Html.DropDownList("SpecialityId")
 
   <input type="submit" value="Save" />
 }
 
-<p>@Html.ActionLink("Back to patient", "Index")</p>
+<p>@Html.ActionLink("Back to doctor", "Index")</p>
